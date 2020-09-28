@@ -47,6 +47,11 @@ namespace UTJ.MLAPISample
         // 接続時
         void Awake()
         {
+            // ターゲットフレームレートをちゃんと設定する
+            // ※60FPSにしないと Headlessサーバーや、バッチクライアントでブン回りしちゃうんで…
+            Application.targetFrameRate = 60;
+
+
             localIPAddr = NetworkUtility.GetLocalIP();
             this.localIpInfoText.text = "あなたのIPアドレスは、" + localIPAddr;
 
@@ -61,22 +66,25 @@ namespace UTJ.MLAPISample
         // 
         private void Start()
         {
-            // headlessモードならサーバー起動
-            if ( NetworkUtility.IsHeadless)
-            {
-                Debug.Log("Headless mode.");
-                ApplyConnectInfoToNetworkManager();
-                this.serverManager.Setup(this.connectInfo, localIPAddr);
-                // ターゲットフレームレートをちゃんと設定する
-                // ※60FPSにしないとブン回りしちゃうんで…
-                Application.targetFrameRate = 60;
-                // あと余計なものをHeadless消します
-                NetworkUtility.RemoveUpdateSystemForHeadless();
+            // サーバービルド時
+#if UNITY_SERVER
+            Debug.Log("Server Build.");
+            ApplyConnectInfoToNetworkManager();
+            this.serverManager.Setup(this.connectInfo, localIPAddr);
+            // あと余計なものをHeadless消します
+            NetworkUtility.RemoveUpdateSystemForHeadless();
 
-                // MLAPIでサーバーとして起動
-                var tasks = MLAPI.NetworkingManager.Singleton.StartServer();
-                this.serverManager.SetSocketTasks(tasks);
+            // MLAPIでサーバーとして起動
+            var tasks = MLAPI.NetworkingManager.Singleton.StartServer();
+            this.serverManager.SetSocketTasks(tasks);
+#elif ENABLE_AUTO_CLIENT
+            if(NetworkUtility.IsBatchModeRun)
+            {
+                // バッチモードでは余計なシステム消します
+                NetworkUtility.RemoveUpdateSystemForBatchBuild();
+                OnClickClient();
             }
+#endif
         }
 
         // Hostとして起動ボタンを押したとき

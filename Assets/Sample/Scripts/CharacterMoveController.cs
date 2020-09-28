@@ -70,8 +70,10 @@ namespace UTJ.MLAPISample
         // Update is called once per frame
         void Update()
         {
-            // Animatorの速度更新
+            // Animatorの速度更新(歩き・走り・静止などをSpeedでコントロールしてます)
             animatorComponent.SetFloat("Speed", speed.Value);
+            // 音量調整
+            this.audioSouceComponent.volume = SoundVolume.VoiceValue;
 
             if (IsOwner)
             {

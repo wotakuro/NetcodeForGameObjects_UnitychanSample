@@ -33,6 +33,13 @@ namespace UTJ.MLAPISample
 
         private void Disconnect()
         {
+#if ENABLE_AUTO_CLIENT
+            // クライアント接続時に切断したらアプリ終了させます
+            if (NetworkUtility.IsBatchModeRun)
+            {
+                Application.Quit();
+            }
+#endif
             // UIを戻します
             configureObject.SetActive(true);
             stopButton.gameObject.SetActive(false);

@@ -30,6 +30,8 @@ namespace UTJ.MLAPISample
         [SerializeField]
         public string playerName;
 
+
+
         public static ConnectInfo GetDefault()
         {
             ConnectInfo info = new ConnectInfo();

@@ -15,17 +15,21 @@ namespace UTJ.MLAPISample
         private static bool isHeadlessResult;
         private static bool isHeadlessCache = false;
 
-        // headless 起動かどうかを調べて返します
-        public static bool IsHeadless
+        // BatchMode 起動かどうかを調べて返します
+        public static bool IsBatchModeRun
         {
             get
             {
+#if ENABLE_AUTO_CLIENT
                 if (isHeadlessCache)
                 {
                     return isHeadlessResult;
                 }
-                isHeadlessResult = IsHeadlessModeFromArgs();
+                isHeadlessResult = IsBatchMode();
                 isHeadlessCache = true;
+#else
+                isHeadlessResult = false;
+#endif
                 return isHeadlessResult;
             }
         }
@@ -47,8 +51,8 @@ namespace UTJ.MLAPISample
         }
 
 
-        // headless Modeかどうか調べて返します
-        private static bool IsHeadlessModeFromArgs()
+        // Batch Mode起動かどうか調べて返します
+        private static bool IsBatchMode()
         {
             var commands = System.Environment.GetCommandLineArgs();
 
@@ -59,14 +63,24 @@ namespace UTJ.MLAPISample
                     return true;
                 }
             }
-
             return (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
         }
 
 
         // PlayerLoopを利用してHeadless起動時に余計なものを削除します
-        public static void RemoveUpdateSystemForHeadless()
+        public static void RemoveUpdateSystemForHeadlessServer()
         {
+            RemoveUpdateSystem(ShouldExcludeForHeadless, true);
+        }
+        // PlayerLoopを利用してBatchMode起動時に余計なものを削除します
+        public static void RemoveUpdateSystemForBatchBuild()
+        {
+            RemoveUpdateSystem(ShouldExcludeForHeadless, false);
+        }
+
+        // 余計なプレイヤーループを消す関数
+        private static void RemoveUpdateSystem(System.Func< PlayerLoopSystem,bool> shouldExcludeFunc,bool removeAllPhysics)
+        { 
             var currentLoop = PlayerLoop.GetCurrentPlayerLoop();
             var replaceSubSystems = new List<PlayerLoopSystem>();
             var replaceUpdateSystems = new List<PlayerLoopSystem>();
@@ -74,16 +88,18 @@ namespace UTJ.MLAPISample
             foreach ( var subsystem in currentLoop.subSystemList)
             {
                 // 物理丸っと消したい人向け
-                if (subsystem.type == typeof(UnityEngine.PlayerLoop.FixedUpdate))
+                if (removeAllPhysics &&
+                    subsystem.type == typeof(UnityEngine.PlayerLoop.FixedUpdate))
                 {
                     continue;
                 }
+                
                 replaceUpdateSystems.Clear();
                 var newSubSystem = subsystem;
 
                 foreach ( var updateSystem in subsystem.subSystemList)
                 {
-                    if (!ShouldExcludeForHeadless(updateSystem))
+                    if (!shouldExcludeFunc(updateSystem))
                     {
                         replaceUpdateSystems.Add(updateSystem);
                     }
@@ -96,7 +112,7 @@ namespace UTJ.MLAPISample
             PlayerLoop.SetPlayerLoop(currentLoop);
         }
 
-        // いらないサブシステムを削る所
+        // Headlessの状況でサブシステムを削る所
         private static bool ShouldExcludeForHeadless(PlayerLoopSystem updateSystem)
         {
             return
@@ -130,6 +146,7 @@ namespace UTJ.MLAPISample
                 (updateSystem.type == typeof(PreLateUpdate.AIUpdatePostScript)) ||
                 false;
         }
+
 
         // Headlessで必要であることを表します
         public class RequireAtHeadless:System.Attribute

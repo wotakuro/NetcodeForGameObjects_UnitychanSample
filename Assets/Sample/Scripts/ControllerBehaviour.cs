@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UTJ.MLAPISample;
 
 public class ControllerBehaviour : MonoBehaviour
 {
@@ -86,26 +86,38 @@ public class ControllerBehaviour : MonoBehaviour
         get
         {
             Vector3 move;
-            float speedValue = 0.0f;
+            // 自動入力時の処理
+#if ENABLE_AUTO_CLIENT
+            if (NetworkUtility.IsBatchModeRun)
+            {
+                return CalculateActualMoveVector(this.dummyInputStick);
+            }
+#endif
             if (isTouching)
             {
                 var delta = this.currentPos - this.touchedPos;
                 delta /= (Screen.dpi *0.3f);
-
                 move = new Vector3(delta.x, 0, delta.y);
             }
             else
             {
                 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             }
-            speedValue = move.magnitude;
-            if (speedValue > 1.0f)
-            {
-                move /= speedValue;
-            }
-            return move;
+            return CalculateActualMoveVector(move);
         }
     }
+    // 斜めに入れたときに移動速度が速くなってしまうので、その対策です
+    private Vector3 CalculateActualMoveVector(Vector3 vec)
+    {
+        float speedValue = 0.0f;
+        speedValue = vec.magnitude;
+        if (speedValue > 1.0f)
+        {
+            vec /= speedValue;
+        }
+        return vec;
+    }
+
 
     // ボタンを押したかどうか( PC 1-5キー、ボタン)
     public bool IsKeyDown(int idx)
@@ -150,6 +162,10 @@ public class ControllerBehaviour : MonoBehaviour
     {
         this.UpdateTouchPos();
         this.UpdateLeftStickPosition();
+        // バッチモード時のダミー移動処理
+#if ENABLE_AUTO_CLIENT
+        UpdateDummyInput();
+#endif
     }
 
     // 左側のスティックの更新
@@ -218,5 +234,38 @@ public class ControllerBehaviour : MonoBehaviour
         touch = default;
         return false;
     }
+
+
+    // バッチビルドのダミー用
+#if ENABLE_AUTO_CLIENT
+
+    private float dummyInputStickTimer;
+    private float dummyInputVoiceTimer;
+    private Vector3 dummyInputStick;
+
+    private void UpdateDummyInput()
+    {
+        if (!NetworkUtility.IsBatchModeRun)
+        {
+            return;
+        }
+
+        if( dummyInputStickTimer <= 0.0f)
+        {
+            float rand = UnityEngine.Random.Range(-Mathf.PI , Mathf.PI);
+            dummyInputStick = new Vector3(Mathf.Cos(rand), 0.0f, Mathf.Sign(rand));
+            dummyInputStickTimer = UnityEngine.Random.Range(1.0f, 4.0f);
+        }
+        dummyInputStickTimer -= Time.deltaTime;
+
+        if(dummyInputVoiceTimer < 0.0f)
+        {
+            dummyInputVoiceTimer = UnityEngine.Random.Range(5.0f, 20.0f);
+            this.OnClickBtn(UnityEngine.Random.Range(0, 4));
+        }
+        dummyInputVoiceTimer -= Time.deltaTime;
+    }
+#endif
+
 
 }

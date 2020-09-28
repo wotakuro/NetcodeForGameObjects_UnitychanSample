@@ -659,7 +659,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: ENABLE_AUTO_CLIENT
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
