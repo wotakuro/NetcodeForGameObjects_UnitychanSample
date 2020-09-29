@@ -35,6 +35,16 @@ namespace UTJ.MLAPISample
 
             // Player名が変更になった時のコールバック指定
             this.playerName.OnValueChanged += OnChangePlayerName;
+
+            // あとServer時に余計なものを削除します
+#if UNITY_SERVER
+            NetworkUtility.RemoveAllStandaloneComponents(this.gameObject);
+#elif ENABLE_AUTO_CLIENT
+            if (NetworkUtility.IsBatchModeRun)
+            {
+                NetworkUtility.RemoveAllStandaloneComponents(this.gameObject);
+            }
+#endif
         }
         private void Start()
         {
@@ -75,6 +85,7 @@ namespace UTJ.MLAPISample
             // 音量調整
             this.audioSouceComponent.volume = SoundVolume.VoiceValue;
 
+            // オーナーとして管理している場合、ここのUpdateを呼びます
             if (IsOwner)
             {
                 UpdateAsOwner();

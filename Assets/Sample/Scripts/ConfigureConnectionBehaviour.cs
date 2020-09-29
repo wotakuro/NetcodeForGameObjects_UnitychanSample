@@ -72,13 +72,13 @@ namespace UTJ.MLAPISample
             ApplyConnectInfoToNetworkManager();
             this.serverManager.Setup(this.connectInfo, localIPAddr);
             // あと余計なものをHeadless消します
-            NetworkUtility.RemoveUpdateSystemForHeadless();
+            NetworkUtility.RemoveUpdateSystemForHeadlessServer();
 
             // MLAPIでサーバーとして起動
             var tasks = MLAPI.NetworkingManager.Singleton.StartServer();
             this.serverManager.SetSocketTasks(tasks);
 #elif ENABLE_AUTO_CLIENT
-            if(NetworkUtility.IsBatchModeRun)
+            if (NetworkUtility.IsBatchModeRun)
             {
                 // バッチモードでは余計なシステム消します
                 NetworkUtility.RemoveUpdateSystemForBatchBuild();
