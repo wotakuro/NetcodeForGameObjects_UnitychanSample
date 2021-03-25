@@ -21,14 +21,14 @@ namespace UTJ.MLAPISample
 
         public void Setup()
         {
-            MLAPI.NetworkingManager.Singleton.OnClientConnectedCallback += OnClientConnect;
-            MLAPI.NetworkingManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnect;
+            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
 
         private void ReoveCallbacks()
         {
-            MLAPI.NetworkingManager.Singleton.OnClientConnectedCallback -= OnClientConnect;
-            MLAPI.NetworkingManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnect;
+            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
 
         private void Disconnect()
@@ -50,14 +50,14 @@ namespace UTJ.MLAPISample
 
         private void OnClickStopButton()
         {
-            MLAPI.NetworkingManager.Singleton.StopClient();
+            MLAPI.NetworkManager.Singleton.StopClient();
             Disconnect();
         }
 
         private void OnClientConnect(ulong clientId)
         {
             // 自身の接続の場合
-            if (clientId == MLAPI.NetworkingManager.Singleton.LocalClientId)
+            if (clientId == MLAPI.NetworkManager.Singleton.LocalClientId)
             {
                 configureObject.SetActive(false);
 
@@ -65,7 +65,7 @@ namespace UTJ.MLAPISample
                 stopButton.onClick.AddListener(this.OnClickStopButton);
                 stopButton.gameObject.SetActive(true);
             }
-            Debug.Log("Connect Client:" + clientId + "::" + MLAPI.NetworkingManager.Singleton.LocalClientId);
+            Debug.Log("Connect Client:" + clientId + "::" + MLAPI.NetworkManager.Singleton.LocalClientId);
         }
         private void OnClientDisconnect(ulong clientId)
         {
@@ -75,7 +75,7 @@ namespace UTJ.MLAPISample
 
         private void Update()
         {
-            var netMgr = MLAPI.NetworkingManager.Singleton;
+            var netMgr = MLAPI.NetworkManager.Singleton;
             // 3人以上接続時に切断が呼び出されないので対策
             if (!netMgr.IsConnectedClient && previewConnected)
             {

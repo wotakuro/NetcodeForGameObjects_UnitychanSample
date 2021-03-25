@@ -1,4 +1,5 @@
-﻿using MLAPI.NetworkedVar;
+﻿using MLAPI.Messaging;
+using MLAPI.NetworkVariable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace UTJ.MLAPISample
 {
     // キャラクターの動きのコントローラー
-    public class CharacterMoveController : MLAPI.NetworkedBehaviour
+    public class CharacterMoveController : MLAPI.NetworkBehaviour
     {
 
         public TextMesh playerNameTextMesh;
@@ -23,9 +24,9 @@ namespace UTJ.MLAPISample
         // Networkで同期する変数を作成します
         #region NETWORKED_VAR
         // Animationに流すスピード変数
-        private NetworkedVar<float> speed = new NetworkedVar<float>(new NetworkedVarSettings { WritePermission = NetworkedVarPermission.OwnerOnly }, 0.0f);
+        private NetworkVariable<float> speed = new NetworkVariable<float>(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, 0.0f);
         // プレイヤー名
-        private NetworkedVar<string> playerName = new NetworkedVar<string>(new NetworkedVarSettings { WritePermission = NetworkedVarPermission.OwnerOnly }, "");
+        private NetworkVariable<string> playerName = new NetworkVariable<string>(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, "");
         #endregion NETWORKED_VAR
 
         private void Awake()
@@ -121,9 +122,7 @@ namespace UTJ.MLAPISample
                 if (ControllerBehaviour.Instance.IsKeyDown(i))
                 {
                     // 他の人に流してもらうために、サーバーにRPCします。
-                    InvokeServerRpc(PlayAudioRequestOnServer, i);
-                    // 自分だけは先行して流しておきます                
-                    PlayAudio(i);
+                    PlayAudioRequestOnServerRpc(i);
                 }
             }
             // 入力の通知を通知します
@@ -131,17 +130,21 @@ namespace UTJ.MLAPISample
         }
 
         // Clientからサーバーに呼び出されるRPCです。
-        [MLAPI.Messaging.ServerRPC(RequireOwnership = true)]
-        private void PlayAudioRequestOnServer(int idx)
+        [MLAPI.Messaging.ServerRpc(RequireOwnership = true)]
+        private void PlayAudioRequestOnServerRpc(int idx)
         {
             // このオブジェクトのオーナー以外に対して PlayAudioを呼び出します
-            InvokeClientRpcOnEveryoneExcept(PlayAudio, this.OwnerClientId, idx);
+            PlayAudioClientRpc(idx);
+//            InvokeClientRpcOnEveryoneExcept(PlayAudio, this.OwnerClientId, idx);
         }
 
         // 音を再生します。付随してParticleをPlayします
-        [MLAPI.Messaging.ClientRPC]
-        private void PlayAudio(int idx)
+        [MLAPI.Messaging.ClientRpc]
+        private void PlayAudioClientRpc(int idx)
         {
+            PlayAudio(idx);
+        }
+        private void PlayAudio(int idx) { 
             this.audioSouceComponent.clip = audios[idx];
             this.audioSouceComponent.Play();
 

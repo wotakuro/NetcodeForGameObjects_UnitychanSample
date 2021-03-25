@@ -30,11 +30,11 @@ namespace UTJ.MLAPISample
         {
             this.cachedConnectInfo = connectInfo;
             // サーバーとして起動したときのコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnServerStarted += this.OnStartServer;
+            MLAPI.NetworkManager.Singleton.OnServerStarted += this.OnStartServer;
             // クライアントが接続された時のコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnClientConnectedCallback += this.OnClientConnect;
+            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback += this.OnClientConnect;
             // クライアントが切断された時のコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnClientDisconnectCallback += this.OnClientDisconnect;
+            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback += this.OnClientDisconnect;
 
             if (connectInfo.useRelay)
             {
@@ -52,7 +52,7 @@ namespace UTJ.MLAPISample
                 this.serverInfoText.text = stringBuilder.ToString();
             }
             // transportの初期化
-            MLAPI.NetworkingManager.Singleton.NetworkConfig.NetworkTransport.Init();
+            MLAPI.NetworkManager.Singleton.NetworkConfig.NetworkTransport.Init();
         }
 
         private void OnRelayEndPointReported(System.Net.IPEndPoint endPoint)
@@ -70,11 +70,11 @@ namespace UTJ.MLAPISample
         private void RemoveCallBack()
         {
             // サーバーとして起動したときのコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnServerStarted -= this.OnStartServer;
+            MLAPI.NetworkManager.Singleton.OnServerStarted -= this.OnStartServer;
             // クライアントが接続された時のコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnClientConnectedCallback -= this.OnClientConnect;
+            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback -= this.OnClientConnect;
             // クライアントが切断された時のコールバック設定
-            MLAPI.NetworkingManager.Singleton.OnClientDisconnectCallback -= this.OnClientDisconnect;
+            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback -= this.OnClientDisconnect;
             if (this.cachedConnectInfo.useRelay)
             {
                 MLAPI.Transports.UNET.RelayTransport.OnRemoteEndpointReported -= OnRelayEndPointReported;
@@ -85,8 +85,6 @@ namespace UTJ.MLAPISample
         private void OnClientConnect(ulong clientId)
         {
             Debug.Log("Connect Client " + clientId);
-            // クライアント用にキャラクターを生成します
-            SpawnCharacter(clientId);
         }
 
         // クライアントが切断した時の処理
@@ -100,11 +98,11 @@ namespace UTJ.MLAPISample
         private void OnStartServer()
         {
             Debug.Log("Start Server");
-            var clientId = MLAPI.NetworkingManager.Singleton.ServerClientId;
+            var clientId = MLAPI.NetworkManager.Singleton.ServerClientId;
             // hostならば生成します
-            if (MLAPI.NetworkingManager.Singleton.IsHost)
+            if (MLAPI.NetworkManager.Singleton.IsHost)
             {
-                SpawnCharacter(clientId);
+//                SpawnCharacter(clientId);
             }
 
             configureObject.SetActive(false);
@@ -116,7 +114,7 @@ namespace UTJ.MLAPISample
         // 切断ボタンが呼び出された時の処理
         private void OnClickDisconnectButton()
         {
-            MLAPI.NetworkingManager.Singleton.StopHost();
+            MLAPI.NetworkManager.Singleton.StopHost();
             this.RemoveCallBack();
 
             this.configureObject.SetActive(true);
@@ -124,14 +122,14 @@ namespace UTJ.MLAPISample
             this.serverInfoRoot.SetActive(false);
         }
 
-        // ネットワーク同期するキャラクターオブジェクトを生成します
-        private void SpawnCharacter(ulong clientId)
+        // ネットワーク同期するNetworkPrefabを生成します
+        private void SpawnNetworkPrefab(int idx,ulong clientId)
         {
-            var netMgr = MLAPI.NetworkingManager.Singleton;
-            var networkedPrefab = netMgr.NetworkConfig.NetworkedPrefabs[0];
+            var netMgr = MLAPI.NetworkManager.Singleton;
+            var networkedPrefab = netMgr.NetworkConfig.NetworkPrefabs[idx];
             var randomPosition = new Vector3(Random.Range(-7, 7), 5.0f, Random.Range(-7, 7));
             var gmo = GameObject.Instantiate(networkedPrefab.Prefab, randomPosition, Quaternion.identity);
-            var netObject = gmo.GetComponent<NetworkedObject>();
+            var netObject = gmo.GetComponent<NetworkObject>();
             // このNetworkオブジェクトをクライアントでもSpawnさせます
             netObject.SpawnWithOwnership(clientId);
         }

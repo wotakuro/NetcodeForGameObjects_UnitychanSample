@@ -95,13 +95,13 @@ namespace UTJ.MLAPISample
             this.connectInfo.SaveToFile();
 
             // 既にクライアントとして起動していたら、クライアントを止めます
-            if( MLAPI.NetworkingManager.Singleton.IsClient){
-                MLAPI.NetworkingManager.Singleton.StopClient();
+            if( MLAPI.NetworkManager.Singleton.IsClient){
+                MLAPI.NetworkManager.Singleton.StopClient();
             }
             // ServerManagerでMLAPIのコールバック回りを設定
             this.serverManager.Setup(this.connectInfo, localIPAddr);
             // MLAPIでホストとして起動
-            var tasks = MLAPI.NetworkingManager.Singleton.StartHost();
+            var tasks = MLAPI.NetworkManager.Singleton.StartHost();
             this.serverManager.SetSocketTasks(tasks);
         }
 
@@ -115,7 +115,7 @@ namespace UTJ.MLAPISample
             // ClientManagerでMLAPIのコールバック等を設定
             this.clientManager.Setup();
             // MLAPIでクライアントとして起動
-            var tasks = MLAPI.NetworkingManager.Singleton.StartClient();
+            var tasks = MLAPI.NetworkManager.Singleton.StartClient();
             this.clientManager.SetSocketTasks(tasks);
         }
 
@@ -156,10 +156,10 @@ namespace UTJ.MLAPISample
         private void ApplyConnectInfoToNetworkManager()
         {
             // NetworkManagerから通信実体のTransportを取得します
-            var transport = MLAPI.NetworkingManager.Singleton.NetworkConfig.NetworkTransport;
+            var transport = MLAPI.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
 
             // ※UnetTransportとして扱います
-            var unetTransport = transport as MLAPI.Transports.UNET.UnetTransport;
+            var unetTransport = transport as MLAPI.Transports.UNET.UNetTransport;
             if (unetTransport != null)
             {
                 // relayサーバー使用するか？

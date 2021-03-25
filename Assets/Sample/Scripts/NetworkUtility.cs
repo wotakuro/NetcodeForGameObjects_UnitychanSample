@@ -160,8 +160,8 @@ namespace UTJ.MLAPISample
             var allComponents = gmo.GetComponentsInChildren<MonoBehaviour>(true);
             foreach( var component in allComponents)
             {
-                if(component is MLAPI.NetworkedObject || 
-                    component is MLAPI.NetworkedBehaviour)
+                if(component is MLAPI.NetworkObject || 
+                    component is MLAPI.NetworkBehaviour)
                 {
                     continue;
                 }
