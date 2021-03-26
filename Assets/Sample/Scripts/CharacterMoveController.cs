@@ -131,16 +131,16 @@ namespace UTJ.MLAPISample
 
         // Clientからサーバーに呼び出されるRPCです。
         [MLAPI.Messaging.ServerRpc(RequireOwnership = true)]
-        private void PlayAudioRequestOnServerRpc(int idx)
+        private void PlayAudioRequestOnServerRpc(int idx,ServerRpcParams serverRpcParams = default)
         {
-            // このオブジェクトのオーナー以外に対して PlayAudioを呼び出します
+            // PlayAudioを呼び出します
             PlayAudioClientRpc(idx);
 //            InvokeClientRpcOnEveryoneExcept(PlayAudio, this.OwnerClientId, idx);
         }
 
         // 音を再生します。付随してParticleをPlayします
         [MLAPI.Messaging.ClientRpc]
-        private void PlayAudioClientRpc(int idx)
+        private void PlayAudioClientRpc(int idx,ClientRpcParams clientRpcParams = default)
         {
             PlayAudio(idx);
         }
