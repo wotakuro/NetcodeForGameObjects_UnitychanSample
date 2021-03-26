@@ -85,6 +85,7 @@ namespace UTJ.MLAPISample
         private void OnClientConnect(ulong clientId)
         {
             Debug.Log("Connect Client " + clientId);
+            SpawnNetworkPrefab(0, clientId);
         }
 
         // クライアントが切断した時の処理
@@ -102,7 +103,7 @@ namespace UTJ.MLAPISample
             // hostならば生成します
             if (MLAPI.NetworkManager.Singleton.IsHost)
             {
-//                SpawnCharacter(clientId);
+                SpawnNetworkPrefab(0,clientId);
             }
 
             configureObject.SetActive(false);

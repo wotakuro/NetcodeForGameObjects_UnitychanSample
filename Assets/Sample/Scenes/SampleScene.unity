@@ -1718,10 +1718,10 @@ MonoBehaviour:
     NetworkPrefabs:
     - Prefab: {fileID: 4555631235796503826, guid: 10cad2b85ff2c724d8c50f8de9e53685,
         type: 3}
-      PlayerPrefab: 1
+      PlayerPrefab: 0
     PlayerPrefabHash:
       id: 0
-    CreatePlayerPrefab: 1
+    CreatePlayerPrefab: 0
     ReceiveTickrate: 64
     NetworkTickIntervalSec: 0.05
     MaxReceiveEventsPerTickRate: 500
@@ -1733,7 +1733,7 @@ MonoBehaviour:
     TimeResyncInterval: 30
     EnableNetworkVariable: 1
     EnsureNetworkVariableLengthSafety: 0
-    EnableSceneManagement: 1
+    EnableSceneManagement: 0
     ForceSamePrefabs: 1
     UsePrefabSync: 0
     RecycleNetworkIds: 1
@@ -1746,9 +1746,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: NullableBoolSerializable, ns: MLAPI.Configuration, asm: Unity.Multiplayer.MLAPI.Runtime}
-      data:
-        Value: 10747954479277288609
+      type: {class: , ns: , asm: }
 --- !u!4 &1142964509
 Transform:
   m_ObjectHideFlags: 0
