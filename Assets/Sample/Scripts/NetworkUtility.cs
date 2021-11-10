@@ -6,7 +6,8 @@ using UnityEngine.LowLevel;
 using UnityEngine.PlayerLoop;
 using System.CodeDom;
 using System.Reflection;
-using MLAPI;
+//using MLAPI;
+using Unity.Netcode;
 
 namespace UTJ.MLAPISample
 {
@@ -160,8 +161,8 @@ namespace UTJ.MLAPISample
             var allComponents = gmo.GetComponentsInChildren<MonoBehaviour>(true);
             foreach( var component in allComponents)
             {
-                if(component is MLAPI.NetworkObject || 
-                    component is MLAPI.NetworkBehaviour)
+                if(component is Unity.Netcode.NetworkObject || 
+                    component is Unity.Netcode.NetworkBehaviour)
                 {
                     continue;
                 }

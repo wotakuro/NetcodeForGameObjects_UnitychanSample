@@ -1,5 +1,9 @@
-﻿using MLAPI.Messaging;
-using MLAPI.NetworkVariable;
+﻿//using MLAPI.Messaging;
+//using MLAPI.NetworkVariable;
+using Unity.Netcode;
+
+
+using Unity.Netcode.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +12,8 @@ using UnityEngine;
 namespace UTJ.MLAPISample
 {
     // キャラクターの動きのコントローラー
-    public class CharacterMoveController : MLAPI.NetworkBehaviour
+    public class CharacterMoveController : Unity.Netcode.NetworkBehaviour
     {
-
         public TextMesh playerNameTextMesh;
         public ParticleSystem soundPlayingParticle;
         public AudioSource audioSouceComponent;
@@ -24,9 +27,9 @@ namespace UTJ.MLAPISample
         // Networkで同期する変数を作成します
         #region NETWORKED_VAR
         // Animationに流すスピード変数
-        private NetworkVariable<float> speed = new NetworkVariable<float>(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, 0.0f);
+        private NetworkVariable<float> speed = new NetworkVariable<float>( 0.0f);
         // プレイヤー名
-        private NetworkVariable<string> playerName = new NetworkVariable<string>(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, "");
+        private NetworkVariable<Unity.Collections.FixedString64Bytes> playerName = new NetworkVariable<Unity.Collections.FixedString64Bytes>();// (new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, "");
         #endregion NETWORKED_VAR
 
         private void Awake()
@@ -70,11 +73,12 @@ namespace UTJ.MLAPISample
         }
 
         // player名変更のコールバック
-        void OnChangePlayerName(string prev, string current)
+        void OnChangePlayerName(Unity.Collections.FixedString64Bytes prev,
+            Unity.Collections.FixedString64Bytes current)
         {
             if (playerNameTextMesh != null)
             {
-                playerNameTextMesh.text = current;
+                playerNameTextMesh.text = current.Value;
             }
         }
 
@@ -130,7 +134,7 @@ namespace UTJ.MLAPISample
         }
 
         // Clientからサーバーに呼び出されるRPCです。
-        [MLAPI.Messaging.ServerRpc(RequireOwnership = true)]
+        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
         private void PlayAudioRequestOnServerRpc(int idx,ServerRpcParams serverRpcParams = default)
         {
             // PlayAudioを呼び出します
@@ -139,7 +143,7 @@ namespace UTJ.MLAPISample
         }
 
         // 音を再生します。付随してParticleをPlayします
-        [MLAPI.Messaging.ClientRpc]
+        [Unity.Netcode.ClientRpc]
         private void PlayAudioClientRpc(int idx,ClientRpcParams clientRpcParams = default)
         {
             PlayAudio(idx);

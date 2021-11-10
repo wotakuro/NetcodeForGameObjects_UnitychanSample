@@ -76,7 +76,6 @@ namespace UTJ.MLAPISample
 
             // MLAPIでサーバーとして起動
             var tasks = MLAPI.NetworkingManager.Singleton.StartServer();
-            this.serverManager.SetSocketTasks(tasks);
 #elif ENABLE_AUTO_CLIENT
             if (NetworkUtility.IsBatchModeRun)
             {
@@ -95,14 +94,13 @@ namespace UTJ.MLAPISample
             this.connectInfo.SaveToFile();
 
             // 既にクライアントとして起動していたら、クライアントを止めます
-            if( MLAPI.NetworkManager.Singleton.IsClient){
-                MLAPI.NetworkManager.Singleton.StopClient();
+            if( Unity.Netcode.NetworkManager.Singleton.IsClient){
+                Unity.Netcode.NetworkManager.Singleton.Shutdown();
             }
             // ServerManagerでMLAPIのコールバック回りを設定
             this.serverManager.Setup(this.connectInfo, localIPAddr);
-            // MLAPIでホストとして起動
-            var tasks = MLAPI.NetworkManager.Singleton.StartHost();
-            this.serverManager.SetSocketTasks(tasks);
+            // ホストとして起動
+            var result = Unity.Netcode.NetworkManager.Singleton.StartHost();
         }
 
         // Clientとして起動ボタンを押したとき
@@ -114,9 +112,8 @@ namespace UTJ.MLAPISample
 
             // ClientManagerでMLAPIのコールバック等を設定
             this.clientManager.Setup();
-            // MLAPIでクライアントとして起動
-            var tasks = MLAPI.NetworkManager.Singleton.StartClient();
-            this.clientManager.SetSocketTasks(tasks);
+            // クライアントとして起動
+            var result = Unity.Netcode.NetworkManager.Singleton.StartClient();
         }
 
         // Resetボタンを押したとき
@@ -156,26 +153,15 @@ namespace UTJ.MLAPISample
         private void ApplyConnectInfoToNetworkManager()
         {
             // NetworkManagerから通信実体のTransportを取得します
-            var transport = MLAPI.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+            var transport = Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
 
-            // ※UnetTransportとして扱います
-            var unetTransport = transport as MLAPI.Transports.UNET.UNetTransport;
-            if (unetTransport != null)
+            // ※UnityTransportとして扱います
+            var unityTransport = transport as Unity.Netcode.UnityTransport;
+            if (unityTransport != null)
             {
-                // relayサーバー使用するか？
-                unetTransport.UseMLAPIRelay = this.connectInfo.useRelay;
-
-                if (this.connectInfo.useRelay)
-                {
-                    unetTransport.MLAPIRelayAddress = this.connectInfo.relayIpAddr.Trim();
-                    unetTransport.MLAPIRelayPort = this.connectInfo.relayPort;
-                }
-                // 接続先アドレス指定(Client時)
-                unetTransport.ConnectAddress = this.connectInfo.ipAddr.Trim();
-                // 接続ポート番号指定
-                unetTransport.ConnectPort = this.connectInfo.port;
-                // サーバー側でのポート指定
-                unetTransport.ServerListenPort = this.connectInfo.port;
+                // Relay Serverなしでつなげます
+                unityTransport.SetConnectionData(this.connectInfo.ipAddr.Trim(),
+                    (ushort)this.connectInfo.port); 
             }
 
             // あとPlayer名をStatic変数に保存しておきます

@@ -13,22 +13,17 @@ namespace UTJ.MLAPISample
         private bool previewConnected;
 
 
-        private MLAPI.Transports.Tasks.SocketTasks socketTasks;
-        public void SetSocketTasks(MLAPI.Transports.Tasks.SocketTasks tasks)
-        {
-            socketTasks = tasks;
-        }
 
         public void Setup()
         {
-            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnect;
-            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+            Unity.Netcode.NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnect;
+            Unity.Netcode.NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
 
         private void ReoveCallbacks()
         {
-            MLAPI.NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnect;
-            MLAPI.NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            Unity.Netcode.NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnect;
+            Unity.Netcode.NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
 
         private void Disconnect()
@@ -50,14 +45,14 @@ namespace UTJ.MLAPISample
 
         private void OnClickStopButton()
         {
-            MLAPI.NetworkManager.Singleton.StopClient();
+            Unity.Netcode.NetworkManager.Singleton.Shutdown();
             Disconnect();
         }
 
         private void OnClientConnect(ulong clientId)
         {
             // 自身の接続の場合
-            if (clientId == MLAPI.NetworkManager.Singleton.LocalClientId)
+            if (clientId == Unity.Netcode.NetworkManager.Singleton.LocalClientId)
             {
                 configureObject.SetActive(false);
 
@@ -65,7 +60,7 @@ namespace UTJ.MLAPISample
                 stopButton.onClick.AddListener(this.OnClickStopButton);
                 stopButton.gameObject.SetActive(true);
             }
-            Debug.Log("Connect Client:" + clientId + "::" + MLAPI.NetworkManager.Singleton.LocalClientId);
+            Debug.Log("Connect Client:" + clientId + "::" + Unity.Netcode.NetworkManager.Singleton.LocalClientId);
         }
         private void OnClientDisconnect(ulong clientId)
         {
@@ -75,7 +70,7 @@ namespace UTJ.MLAPISample
 
         private void Update()
         {
-            var netMgr = MLAPI.NetworkManager.Singleton;
+            var netMgr = Unity.Netcode.NetworkManager.Singleton;
             // 3人以上接続時に切断が呼び出されないので対策
             if (!netMgr.IsConnectedClient && previewConnected)
             {
