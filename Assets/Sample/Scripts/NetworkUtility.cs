@@ -38,18 +38,18 @@ namespace UTJ.MLAPISample
         // localのIPアドレスを調べて返します
         public static string GetLocalIP()
         {
-            string ipaddress = "";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             IPHostEntry ipentry = Dns.GetHostEntry(Dns.GetHostName());
 
             foreach (IPAddress ip in ipentry.AddressList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
-                    ipaddress = ip.ToString();
-                    break;
+                    if (sb.Length > 0) { sb.Append(","); }
+                    sb.Append( ip.ToString() );
                 }
             }
-            return ipaddress;
+            return sb.ToString();
         }
 
 

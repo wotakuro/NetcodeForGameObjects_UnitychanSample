@@ -51,15 +51,6 @@ namespace UTJ.MLAPISample
 
         private void OnClientConnect(ulong clientId)
         {
-            // 自身の接続の場合
-            if (clientId == Unity.Netcode.NetworkManager.Singleton.LocalClientId)
-            {
-                configureObject.SetActive(false);
-
-                stopButton.GetComponentInChildren<Text>().text = "Disconnect";
-                stopButton.onClick.AddListener(this.OnClickStopButton);
-                stopButton.gameObject.SetActive(true);
-            }
             Debug.Log("Connect Client:" + clientId + "::" + Unity.Netcode.NetworkManager.Singleton.LocalClientId);
         }
         private void OnClientDisconnect(ulong clientId)
@@ -68,14 +59,33 @@ namespace UTJ.MLAPISample
             Debug.Log("Disconnect Client: " + clientId);
         }
 
+        // 地震が接続した時に呼び出されます
+        private void OnConnectSelf()
+        {
+            configureObject.SetActive(false);
+
+            stopButton.GetComponentInChildren<Text>().text = "Disconnect";
+            stopButton.onClick.AddListener(this.OnClickStopButton);
+            stopButton.gameObject.SetActive(true);
+        }
+
         private void Update()
         {
             var netMgr = Unity.Netcode.NetworkManager.Singleton;
+            var currentConnected = netMgr.IsConnectedClient;
             // 3人以上接続時に切断が呼び出されないので対策
-            if (!netMgr.IsConnectedClient && previewConnected)
+            if (currentConnected != previewConnected)
             {
-                Disconnect();
+                if (!currentConnected)
+                {
+                    Disconnect();
+                }
+                else
+                {
+                    OnConnectSelf();
+                }
             }
+
             previewConnected = netMgr.IsConnectedClient;
         }
     }

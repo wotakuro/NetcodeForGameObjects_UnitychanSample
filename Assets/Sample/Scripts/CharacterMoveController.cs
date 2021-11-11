@@ -29,8 +29,21 @@ namespace UTJ.MLAPISample
         // Animationに流すスピード変数
         private NetworkVariable<float> speed = new NetworkVariable<float>( 0.0f);
         // プレイヤー名
-        private NetworkVariable<Unity.Collections.FixedString64Bytes> playerName = new NetworkVariable<Unity.Collections.FixedString64Bytes>();// (new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly }, "");
+        private NetworkVariable<Unity.Collections.FixedString64Bytes> playerName = new NetworkVariable<Unity.Collections.FixedString64Bytes>();
         #endregion NETWORKED_VAR
+
+
+        // NetworkVariableはサーバーでしか更新できないので更新を依頼します
+        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
+        private void SetSpeedServerRpc(float speed)
+        {
+            this.speed.Value = speed;
+        }
+        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
+        private void SetPlayerNameServerRpc(string name)
+        {
+            this.playerName.Value = name;
+        }
 
         private void Awake()
         {
@@ -50,18 +63,21 @@ namespace UTJ.MLAPISample
             }
 #endif
         }
+
+
         private void Start()
         {
             if (IsOwner)
             {
                 // プレイヤー名をセットします
-                this.playerName.Value = ConfigureConnectionBehaviour.playerName;
+                SetPlayerNameServerRpc( ConfigureConnectionBehaviour.playerName);
                 // コントローラーの有効化をします
                 ControllerBehaviour.Instance.Enable();
             }
         }
-        private void OnDestroy()
+        private new void OnDestroy()
         {
+            base.OnDestroy();
             if (IsOwner)
             {
                 // コントローラーの無効化をします
@@ -97,14 +113,14 @@ namespace UTJ.MLAPISample
             }
         }
 
+
         // オーナーとしての処理
         private void UpdateAsOwner()
         {
             // 移動処理
             Vector3 move = ControllerBehaviour.Instance.LPadVector;
             float speedValue = move.magnitude;
-
-            this.speed.Value = speedValue;
+            this.SetSpeedServerRpc(speedValue);
             move *= Time.deltaTime * 4.0f;
             rigidbodyComponent.position += move;
 
@@ -119,7 +135,6 @@ namespace UTJ.MLAPISample
                 var randomPosition = new Vector3(Random.Range(-7, 7), 5.0f, Random.Range(-7, 7));
                 transform.position = randomPosition;
             }
-
             // キーを押して音を流します
             for (int i = 0; i < this.audios.Length; ++i)
             {
@@ -139,7 +154,6 @@ namespace UTJ.MLAPISample
         {
             // PlayAudioを呼び出します
             PlayAudioClientRpc(idx);
-//            InvokeClientRpcOnEveryoneExcept(PlayAudio, this.OwnerClientId, idx);
         }
 
         // 音を再生します。付随してParticleをPlayします
