@@ -2,9 +2,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UTJ.MLAPISample;
+using UTJ.NetcodeGameObjectSample;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     [NetworkUtility.RequireAtHeadless]
     public class ControllerBehaviour : MonoBehaviour

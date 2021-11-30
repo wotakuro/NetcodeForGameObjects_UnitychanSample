@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // カメラの方を向くコンポーネント、名前表示用
     public class NameLookAtCamera : MonoBehaviour

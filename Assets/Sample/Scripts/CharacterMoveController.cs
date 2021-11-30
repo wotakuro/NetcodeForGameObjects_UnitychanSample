@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // キャラクターの動きのコントローラー
     public class CharacterMoveController : Unity.Netcode.NetworkBehaviour

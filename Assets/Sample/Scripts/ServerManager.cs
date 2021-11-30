@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Unity.Netcode;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // ホスト接続した際に、MLAPIからのコールバックを管理して切断時等の処理をします
     public class ServerManager : MonoBehaviour
@@ -48,18 +48,6 @@ namespace UTJ.MLAPISample
             }
             // transportの初期化
             Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport.Initialize();
-        }
-
-        private void OnRelayEndPointReported(System.Net.IPEndPoint endPoint)
-        {
-            var stringBuilder = new System.Text.StringBuilder(256);
-            this.serverInfoRoot.SetActive(true);
-            stringBuilder.Append("サーバー接続情報\n").
-                Append("接続先IP:").Append(endPoint.Address.ToString()).Append("\n").
-                Append("Port番号:").Append(endPoint.Port).Append("\n").
-                Append("Relay IP:").Append(cachedConnectInfo.relayIpAddr).Append("\n").
-                Append("Relay Port:").Append(cachedConnectInfo.relayPort);
-            this.serverInfoText.text = stringBuilder.ToString();
         }
 
         private void RemoveCallBack()

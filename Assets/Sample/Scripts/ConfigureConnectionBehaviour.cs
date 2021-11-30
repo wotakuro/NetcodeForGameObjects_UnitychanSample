@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // 接続設定や接続をするUIのコンポーネント
     public class ConfigureConnectionBehaviour : MonoBehaviour
@@ -16,10 +16,8 @@ namespace UTJ.MLAPISample
         public InputField ipInputField;
         // 接続ポート入力フィールド
         public InputField portInputField;
-        // Relay IP入力ボックス
-        public InputField relayIpInputField;
-        // Relay ポート入力フィールド
-        public InputField relayPortInputField;
+        // Relay コード入力ボックス
+        public InputField relayJoinCodeInputField;
         // プレイヤー名入力フィールド
         public InputField playerNameInputFiled;
         // リセットボタン
@@ -131,8 +129,6 @@ namespace UTJ.MLAPISample
             this.ipInputField.text = this.connectInfo.ipAddr;
             this.portInputField.text = this.connectInfo.port.ToString();
 
-            this.relayIpInputField.text = this.connectInfo.relayIpAddr;
-            this.relayPortInputField.text = this.connectInfo.relayPort.ToString();
 
             this.playerNameInputFiled.text = this.connectInfo.playerName;
         }
@@ -142,8 +138,6 @@ namespace UTJ.MLAPISample
             this.connectInfo.useRelay = this.useRelayToggle.isOn;
             this.connectInfo.ipAddr = this.ipInputField.text;
             int.TryParse(this.portInputField.text, out this.connectInfo.port);
-            this.connectInfo.relayIpAddr = this.relayIpInputField.text;
-            int.TryParse(this.relayPortInputField.text, out this.connectInfo.relayPort);
 
             this.connectInfo.playerName = this.playerNameInputFiled.text;
         }

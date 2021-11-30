@@ -9,7 +9,7 @@ using System.Reflection;
 //using MLAPI;
 using Unity.Netcode;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // Network関係のUtility関数
     public class NetworkUtility

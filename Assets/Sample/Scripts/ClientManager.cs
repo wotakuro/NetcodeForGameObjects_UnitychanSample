@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UTJ.MLAPISample
+namespace UTJ.NetcodeGameObjectSample
 {
     // クライアント接続した際に、MLAPIからのコールバックを管理して切断時等の処理をします
     public class ClientManager : MonoBehaviour
