@@ -2066,31 +2066,6 @@ PrefabInstance:
       propertyPath: serverManager
       value: 
       objectReference: {fileID: 1282918849}
-    - target: {fileID: 418718972901425216, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 746379327013038696, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_Text
-      value: "Code\u3092\u5165\u529B\u3057\u3066\u4E0B\u3055\u3044"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4581898203227920685, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5166932039767739828, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5166932039767739829, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5166932040194368233, guid: e66f5fb37f12d8b4c975375ae3389026,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2200,21 +2175,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ConnectionInformationUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5166932040232742078, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -69.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5166932040709862897, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -69.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5166932041618868167, guid: e66f5fb37f12d8b4c975375ae3389026,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -69.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e66f5fb37f12d8b4c975375ae3389026, type: 3}
