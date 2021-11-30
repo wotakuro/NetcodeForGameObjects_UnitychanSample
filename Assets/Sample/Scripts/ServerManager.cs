@@ -22,7 +22,7 @@ namespace UTJ.NetcodeGameObjectSample
 
 
 
-        public void Setup(ConnectInfo connectInfo, string localIp)
+        public void Setup(ConnectInfo connectInfo)
         {
             this.cachedConnectInfo = connectInfo;
             // サーバーとして起動したときのコールバック設定
@@ -31,13 +31,13 @@ namespace UTJ.NetcodeGameObjectSample
             Unity.Netcode.NetworkManager.Singleton.OnClientConnectedCallback += this.OnClientConnect;
             // クライアントが切断された時のコールバック設定
             Unity.Netcode.NetworkManager.Singleton.OnClientDisconnectCallback += this.OnClientDisconnect;
+            // transportの初期化
+            NetworkManager.Singleton.NetworkConfig.NetworkTransport.Initialize();
+        }
 
-            if (connectInfo.useRelay)
-            {
-                this.serverInfoRoot.SetActive(true);
-                this.serverInfoText.text = "Relayサーバーに繋がっていません";
-            }
-            else
+        // Information用のテキストをセットします
+        public void SetInformationText(ConnectInfo connectInfo, string localIp) {
+            if (!connectInfo.useRelay)
             {
                 var stringBuilder = new System.Text.StringBuilder(256);
                 this.serverInfoRoot.SetActive(true);
@@ -46,9 +46,17 @@ namespace UTJ.NetcodeGameObjectSample
                     Append("Port番号:").Append(connectInfo.port);
                 this.serverInfoText.text = stringBuilder.ToString();
             }
-            // transportの初期化
-            Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport.Initialize();
         }
+        // Information用のテキストをセットします
+        public void SetInformationTextWithRelay(string joinCode)
+        {
+            var stringBuilder = new System.Text.StringBuilder(256);
+            this.serverInfoRoot.SetActive(true);
+            stringBuilder.Append("Relay接続情報\n").
+                    Append("コード:").Append(joinCode);
+            this.serverInfoText.text = stringBuilder.ToString();
+        }
+
 
         private void RemoveCallBack()
         {

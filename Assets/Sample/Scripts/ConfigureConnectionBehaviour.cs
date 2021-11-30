@@ -95,10 +95,24 @@ namespace UTJ.NetcodeGameObjectSample
             if( Unity.Netcode.NetworkManager.Singleton.IsClient){
                 Unity.Netcode.NetworkManager.Singleton.Shutdown();
             }
-            // ServerManagerでMLAPIのコールバック回りを設定
-            this.serverManager.Setup(this.connectInfo, localIPAddr);
-            // ホストとして起動
-            var result = Unity.Netcode.NetworkManager.Singleton.StartHost();
+            // ServerManagerでコールバック回りを設定
+            this.serverManager.Setup(this.connectInfo);
+
+            // Relayを使用する場合
+            if (connectInfo.useRelay)
+            {
+                RelayServiceUtility.StartUnityRelayHost(
+                    () => {
+                        this.serverManager.SetInformationTextWithRelay(RelayServiceUtility.HostJoinCode);
+                    },
+                    null);
+            }
+            // Relayを利用しないなら即ホストとして起動
+            else
+            {
+                this.serverManager.SetInformationText(connectInfo, localIPAddr);
+                var result = Unity.Netcode.NetworkManager.Singleton.StartHost();
+            }
         }
 
         // Clientとして起動ボタンを押したとき
@@ -111,7 +125,15 @@ namespace UTJ.NetcodeGameObjectSample
             // ClientManagerでMLAPIのコールバック等を設定
             this.clientManager.Setup();
             // クライアントとして起動
-            var result = Unity.Netcode.NetworkManager.Singleton.StartClient();
+            if (connectInfo.useRelay)
+            {
+                RelayServiceUtility.StartClientUnityRelayModeAsync(connectInfo.relayCode);
+            }
+            // Relay使用しないならそのまま
+            else
+            {
+                var result = Unity.Netcode.NetworkManager.Singleton.StartClient();
+            }
         }
 
         // Resetボタンを押したとき
@@ -137,8 +159,8 @@ namespace UTJ.NetcodeGameObjectSample
         {
             this.connectInfo.useRelay = this.useRelayToggle.isOn;
             this.connectInfo.ipAddr = this.ipInputField.text;
+            this.connectInfo.relayCode = this.relayJoinCodeInputField.text;
             int.TryParse(this.portInputField.text, out this.connectInfo.port);
-
             this.connectInfo.playerName = this.playerNameInputFiled.text;
         }
 

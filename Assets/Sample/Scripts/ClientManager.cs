@@ -55,11 +55,10 @@ namespace UTJ.NetcodeGameObjectSample
         }
         private void OnClientDisconnect(ulong clientId)
         {
-            // 自身が外された
             Debug.Log("Disconnect Client: " + clientId);
         }
 
-        // 地震が接続した時に呼び出されます
+        // 自信が接続した時に呼び出されます
         private void OnConnectSelf()
         {
             configureObject.SetActive(false);

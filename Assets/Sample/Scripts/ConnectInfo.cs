@@ -17,6 +17,9 @@ namespace UTJ.NetcodeGameObjectSample
         //リレーサーバーの有無
         [SerializeField]
         public bool useRelay;
+        // Relayの参加コード(毎回変わるのでシリアライズ対象外
+        [System.NonSerialized]
+        public string relayCode;
 
 
         // プレイヤー名
