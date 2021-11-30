@@ -275,7 +275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: -28}
+  m_AnchoredPosition: {x: 40, y: -30}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3018844830023422364
@@ -797,7 +797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -185.60007, y: -27.600016}
+  m_AnchoredPosition: {x: -185.60007, y: -30}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &5166932039767739835
@@ -1179,8 +1179,7 @@ MonoBehaviour:
   useRelayToggle: {fileID: 5166932039767739835}
   ipInputField: {fileID: 5166932040863693904}
   portInputField: {fileID: 5166932040888377451}
-  relayIpInputField: {fileID: 3963099622551600041}
-  relayPortInputField: {fileID: 0}
+  relayJoinCodeInputField: {fileID: 3963099622551600041}
   playerNameInputFiled: {fileID: 2073602485369850850}
   resetButton: {fileID: 5166932040232742077}
   hostButton: {fileID: 5166932041618868166}
@@ -1223,7 +1222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -185.2, y: -69.99999}
+  m_AnchoredPosition: {x: -185.2, y: -69.4}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5166932040232742051
@@ -1423,7 +1422,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68.9, y: -70}
+  m_AnchoredPosition: {x: 68.9, y: -69.4}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5166932040709862902
@@ -2145,7 +2144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -67.2, y: -69.99999}
+  m_AnchoredPosition: {x: -67.2, y: -69.4}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5166932041618868164
@@ -2624,4 +2623,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u63A5\u7D9A\u5148IP"
+  m_Text: "Code\u3092\u5165\u529B\u3057\u3066\u4E0B\u3055\u3044"
