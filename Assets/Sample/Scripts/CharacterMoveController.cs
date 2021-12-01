@@ -101,6 +101,9 @@ namespace UTJ.NetcodeGameObjectSample
         // Update is called once per frame
         void Update()
         {
+            // TODO:::なんか OnValueChangedがおかしい…。
+            // 自分より前にSpawnされた人の名前取れないんで Workaround
+            playerNameTextMesh.text = this.playerName.Value.Value;
             // Animatorの速度更新(歩き・走り・静止などをSpeedでコントロールしてます)
             animatorComponent.SetFloat("Speed", speed.Value);
             // 音量調整
