@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,15 +66,15 @@ namespace UTJ.NetcodeGameObjectSample
         private void Start()
         {
             // サーバービルド時
-#if UNITY_SERVER
+#if UNITY_SERVER 
             Debug.Log("Server Build.");
-            ApplyConnectInfoToNetworkManager();
-            this.serverManager.Setup(this.connectInfo, localIPAddr);
+            ApplyConnectInfoToNetworkManager(true);
+            this.serverManager.Setup(this.connectInfo);
             // あと余計なものをHeadless消します
             NetworkUtility.RemoveUpdateSystemForHeadlessServer();
 
             // MLAPIでサーバーとして起動
-            var tasks = MLAPI.NetworkingManager.Singleton.StartServer();
+            var tasks = Unity.Netcode.NetworkManager.Singleton.StartServer();
 #elif ENABLE_AUTO_CLIENT
             if (NetworkUtility.IsBatchModeRun)
             {
@@ -88,7 +89,7 @@ namespace UTJ.NetcodeGameObjectSample
         private void OnClickHost()
         {
             GenerateConnectInfoValueFromUI();
-            ApplyConnectInfoToNetworkManager();
+            ApplyConnectInfoToNetworkManager(true);
             this.connectInfo.SaveToFile();
 
             // 既にクライアントとして起動していたら、クライアントを止めます
@@ -119,7 +120,7 @@ namespace UTJ.NetcodeGameObjectSample
         private void OnClickClient()
         {
             GenerateConnectInfoValueFromUI();
-            ApplyConnectInfoToNetworkManager();
+            ApplyConnectInfoToNetworkManager(false);
             this.connectInfo.SaveToFile();
 
             // ClientManagerでMLAPIのコールバック等を設定
@@ -166,7 +167,7 @@ namespace UTJ.NetcodeGameObjectSample
 
 
         // 接続設定をMLAPIのネットワーク設定に反映させます
-        private void ApplyConnectInfoToNetworkManager()
+        private void ApplyConnectInfoToNetworkManager(bool isServer)
         {
             // NetworkManagerから通信実体のTransportを取得します
             var transport = Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
@@ -175,9 +176,17 @@ namespace UTJ.NetcodeGameObjectSample
             var unityTransport = transport as Unity.Netcode.UnityTransport;
             if (unityTransport != null)
             {
-                // Relay Serverなしでつなげます
-                unityTransport.SetConnectionData(this.connectInfo.ipAddr.Trim(),
-                    (ushort)this.connectInfo.port); 
+                // サーバーはAnyから受け付けます
+                if (isServer)
+                {
+                    // ここのConnectionDataが、何処から受け付けるかの設定になる！！！
+                    unityTransport.SetConnectionData(IPAddress.Any.ToString(),
+                        (ushort)this.connectInfo.port);
+                }
+                else { 
+                    unityTransport.SetConnectionData(this.connectInfo.ipAddr.Trim(),
+                        (ushort)this.connectInfo.port);
+                }
             }
 
             // あとPlayer名をStatic変数に保存しておきます
