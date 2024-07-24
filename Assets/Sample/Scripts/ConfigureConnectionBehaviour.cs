@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -173,7 +174,7 @@ namespace UTJ.NetcodeGameObjectSample
             var transport = Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
 
             // ※UnityTransportとして扱います
-            var unityTransport = transport as Unity.Netcode.UnityTransport;
+            var unityTransport = transport as UnityTransport;
             if (unityTransport != null)
             {
                 // サーバーはAnyから受け付けます

@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StringTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StringTable
+  m_TableCollectionNameGuidString: 609121b839712a245893b3a922a5cd2d
+  m_Entries:
+  - m_Id: 756176433152
+    m_Key: AudioVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 230341795164160
+    m_Key: ResetButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231400466853888
+    m_Key: StartHost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231452434280448
+    m_Key: StartClient
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231964508467200
+    m_Key: UseRelay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232151717031936
+    m_Key: PortNumber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232245560389632
+    m_Key: ConnectIp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232604450205696
+    m_Key: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281108082110464
+    m_Key: DefaultName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281201904496640
+    m_Key: RelayCode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281283865391104
+    m_Key: RelayCodeField
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281344489861120
+    m_Key: NameCodeField
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281516716371968
+    m_Key: DisconnectButton
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 9176998463772819688
+  references:
+    version: 2
+    RefIds:
+    - rid: 9176998463772819688
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1721728516361

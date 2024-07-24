@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking.Match;
+//using UnityEngine.Networking.Match;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Unity.Netcode;
@@ -90,7 +90,6 @@ namespace UTJ.NetcodeGameObjectSample
         private void OnStartServer()
         {
             Debug.Log("Start Server");
-            var clientId = Unity.Netcode.NetworkManager.Singleton.ServerClientId;
             // hostならば生成します
 
             configureObject.SetActive(false);
