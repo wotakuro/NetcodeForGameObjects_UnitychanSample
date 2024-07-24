@@ -67,6 +67,18 @@ MonoBehaviour:
     m_Key: DisconnectButton
     m_Metadata:
       m_Items: []
+  - m_Id: 296359255126016
+    m_Key: ServerInfo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296439508938752
+    m_Key: RelayInfo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296463580049408
+    m_Key: IpAddrInfo
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
