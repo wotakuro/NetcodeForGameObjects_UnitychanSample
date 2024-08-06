@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Unity.Netcode;
+using UnityEngine.Localization;
 
 namespace UTJ.NetcodeGameObjectSample
 {
@@ -19,6 +20,8 @@ namespace UTJ.NetcodeGameObjectSample
         public Text serverInfoText;
 
         private ConnectInfo cachedConnectInfo;
+
+        private string cachedJoinCode;
 
 
 
@@ -36,9 +39,17 @@ namespace UTJ.NetcodeGameObjectSample
         }
 
         // Information用のテキストをセットします
-        public void SetInformationText(ConnectInfo connectInfo, string localIp) {
+        public void SetInformationText( ) {
+
+            this.cachedJoinCode = null;
+            string localIp = NetworkUtility.GetLocalIP();
+            var connectInfo = cachedConnectInfo;
+
             if (!connectInfo.useRelay)
             {
+
+                var localizedString = new LocalizedString("StringTable", "ServerInfo");
+
                 var stringBuilder = new System.Text.StringBuilder(256);
                 this.serverInfoRoot.SetActive(true);
                 stringBuilder.Append("サーバー接続情報\n").
@@ -50,6 +61,8 @@ namespace UTJ.NetcodeGameObjectSample
         // Information用のテキストをセットします
         public void SetInformationTextWithRelay(string joinCode)
         {
+            this.cachedJoinCode = joinCode;
+            var localizedString = new LocalizedString("StringTable", "ServerInfo");
             var stringBuilder = new System.Text.StringBuilder(256);
             this.serverInfoRoot.SetActive(true);
             stringBuilder.Append("Relay接続情報\n").

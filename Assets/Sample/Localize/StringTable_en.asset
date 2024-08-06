@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 609121b839712a245893b3a922a5cd2d, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 9176998507766349895
   m_TableData:
   - m_Id: 756176433152
     m_Localized: Audio Volume
@@ -70,6 +71,27 @@ MonoBehaviour:
     m_Localized: Disconnect
     m_Metadata:
       m_Items: []
+  - m_Id: 296359255126016
+    m_Localized: "ServerInfo\nIPAddress\uFF1A{ConnectIp}\nPort\uFF1A{Port}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296439508938752
+    m_Localized: "Relay Information\n\u30B3\u30FC\u30C9:{RelayCode}"
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
+  - m_Id: 296463580049408
+    m_Localized: Your IP Address is {ipaddr}.
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 9176998507766349895
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 296439508938752
+        - id: 296463580049408
