@@ -30,7 +30,7 @@ namespace UTJ.NetcodeGameObjectSample
         void SetUpUI()
         {
 
-
+            dropDown.options.Clear();
             foreach (var locale in LocalizationSettings.AvailableLocales.Locales)
             {
                 dropDown.options.Add(new Dropdown.OptionData(locale.name));
