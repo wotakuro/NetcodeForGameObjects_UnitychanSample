@@ -1,5 +1,5 @@
-# MLAPI_UnitychanSample
-MLAPIのユニティちゃんサンプルです
+# NetcodeForGameObjects_UnitychanSample
+Netcode for GameObjectsのユニティちゃんサンプルです
 
 # 画面
 ![Sample](docs/Sample.gif "Sample")
@@ -44,6 +44,6 @@ Unityプロジェクトをクラウドサービスと紐付け、ダッシュボ
 
 # ダミークライアントモードについて
 
-「MLAPI_Sample.exe -batchmode」というようにバッチモードで起動した際にはダミークライアントとして動作します。<br />
+「Sample.exe -batchmode」というようにバッチモードで起動した際にはダミークライアントとして動作します。<br />
 実行ファイルと同じディレクトリにあるconnectInfo.json を読みこんで、その設定で接続します。接続先等を弄りたい場合はコチラを直接編集して起動してください。<br />
 
