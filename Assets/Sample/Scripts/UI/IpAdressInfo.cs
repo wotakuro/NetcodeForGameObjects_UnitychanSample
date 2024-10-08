@@ -15,10 +15,17 @@ namespace UTJ.NetcodeGameObjectSample
         private void Awake()
         {
             UpdateText();
-            LocalizationSettings.SelectedLocaleChanged += (locale) =>
-            {
-                UpdateText();
-            };
+            LocalizationSettings.SelectedLocaleChanged += OnLocaleChange;
+        }
+
+        private void OnDestroy()
+        {
+            LocalizationSettings.SelectedLocaleChanged -= OnLocaleChange;
+        }
+
+        private void OnLocaleChange(Locale locale)
+        {
+            UpdateText();
         }
 
         void UpdateText()

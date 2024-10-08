@@ -499,7 +499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 58.2, y: -39.6}
+  m_AnchoredPosition: {x: 58.200195, y: -39.600098}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157524799
@@ -678,8 +678,9 @@ GameObject:
   - component: {fileID: 263795792}
   - component: {fileID: 263795794}
   - component: {fileID: 263795793}
+  - component: {fileID: 263795795}
   m_Layer: 5
-  m_Name: ServerInfo
+  m_Name: ServerConnectInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,6 +742,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263795791}
   m_CullTransparentMesh: 0
+--- !u!114 &263795795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263795791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beed2a1cc489f1641add62fd82be8f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverInfoText: {fileID: 634311284}
+  serverInfoRoot: {fileID: 263795791}
 --- !u!1 &281685043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,8 +2718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopButton: {fileID: 1525113790}
   configureObject: {fileID: 497155432}
-  serverInfoRoot: {fileID: 263795791}
-  serverInfoText: {fileID: 634311284}
+  serverConnectInfoUI: {fileID: 263795795}
   networkedPrefab: {fileID: 4555631235796503826, guid: 10cad2b85ff2c724d8c50f8de9e53685,
     type: 3}
 --- !u!1 &1287308975
@@ -3257,7 +3271,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 5, y: -55.2}
+  m_AnchoredPosition: {x: 5, y: -93.5}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1525113790

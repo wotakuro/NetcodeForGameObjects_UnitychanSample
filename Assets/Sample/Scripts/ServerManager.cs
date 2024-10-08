@@ -16,12 +16,11 @@ namespace UTJ.NetcodeGameObjectSample
         public Button stopButton;
         public GameObject configureObject;
 
-        public GameObject serverInfoRoot;
-        public Text serverInfoText;
+        [SerializeField]
+        public ServerConnectInfo serverConnectInfoUI;
 
         private ConnectInfo cachedConnectInfo;
 
-        private string cachedJoinCode;
 
 
 
@@ -39,35 +38,16 @@ namespace UTJ.NetcodeGameObjectSample
         }
 
         // Information用のテキストをセットします
-        public void SetInformationText( ) {
-
-            this.cachedJoinCode = null;
-            string localIp = NetworkUtility.GetLocalIP();
-            var connectInfo = cachedConnectInfo;
-
-            if (!connectInfo.useRelay)
-            {
-
-                var localizedString = new LocalizedString("StringTable", "ServerInfo");
-
-                var stringBuilder = new System.Text.StringBuilder(256);
-                this.serverInfoRoot.SetActive(true);
-                stringBuilder.Append("サーバー接続情報\n").
-                    Append("接続先IP:").Append(localIp).Append("\n").
-                    Append("Port番号:").Append(connectInfo.port);
-                this.serverInfoText.text = stringBuilder.ToString();
-            }
+        public void SetHostNetworkInformation()
+        {
+            serverConnectInfoUI.EnableInfoUI(this.cachedConnectInfo, null);
         }
+
+
         // Information用のテキストをセットします
         public void SetInformationTextWithRelay(string joinCode)
         {
-            this.cachedJoinCode = joinCode;
-            var localizedString = new LocalizedString("StringTable", "ServerInfo");
-            var stringBuilder = new System.Text.StringBuilder(256);
-            this.serverInfoRoot.SetActive(true);
-            stringBuilder.Append("Relay接続情報\n").
-                    Append("コード:").Append(joinCode);
-            this.serverInfoText.text = stringBuilder.ToString();
+            this.serverConnectInfoUI.EnableInfoUI(this.cachedConnectInfo, joinCode);
         }
 
 
@@ -119,7 +99,7 @@ namespace UTJ.NetcodeGameObjectSample
 
             this.configureObject.SetActive(true);
             this.stopButton.gameObject.SetActive(false);
-            this.serverInfoRoot.SetActive(false);
+            this.serverConnectInfoUI.DisableInfoUI();
         }
         [SerializeField]
         private GameObject networkedPrefab;

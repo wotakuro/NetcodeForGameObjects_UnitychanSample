@@ -28,6 +28,17 @@ namespace UTJ.NetcodeGameObjectSample
         [SerializeField]
         public string playerName;
 
+        public ConnectInfo()
+        {
+        }
+        public ConnectInfo(ConnectInfo src)
+        {
+            this.ipAddr = src.ipAddr;
+            this.port = src.port;
+            this.useRelay = src.useRelay;
+            this.relayCode = src.relayCode;
+            this.playerName = src.playerName;
+        }
 
 
         public static ConnectInfo GetDefault()

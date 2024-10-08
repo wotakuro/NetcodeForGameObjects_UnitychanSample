@@ -107,7 +107,7 @@ namespace UTJ.NetcodeGameObjectSample
             // Relayを利用しないなら即ホストとして起動
             else
             {
-                this.serverManager.SetInformationText();
+                this.serverManager.SetHostNetworkInformation();
                 var result = Unity.Netcode.NetworkManager.Singleton.StartHost();
             }
         }

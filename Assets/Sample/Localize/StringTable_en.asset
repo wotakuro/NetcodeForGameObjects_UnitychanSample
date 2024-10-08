@@ -70,13 +70,17 @@ MonoBehaviour:
   - m_Id: 281516716371968
     m_Localized: Disconnect
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 9176998507766349895
   - m_Id: 296359255126016
     m_Localized: "ServerInfo\nIPAddress\uFF1A{ConnectIp}\nPort\uFF1A{Port}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 9176998507766349895
   - m_Id: 296439508938752
-    m_Localized: "Relay Information\n\u30B3\u30FC\u30C9:{RelayCode}"
+    m_Localized: 'Relay Information
+
+      RelayCode:{RelayCode}'
     m_Metadata:
       m_Items:
       - rid: 9176998507766349895
@@ -95,3 +99,5 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 296439508938752
         - id: 296463580049408
+        - id: 281516716371968
+        - id: 296359255126016
