@@ -1,11 +1,4 @@
-﻿//using MLAPI.Messaging;
-//using MLAPI.NetworkVariable;
-using Unity.Netcode;
-
-
-using Unity.Netcode.Components;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Unity.Netcode;
 using UnityEngine;
 
 
@@ -27,23 +20,13 @@ namespace UTJ.NetcodeGameObjectSample
         // Networkで同期する変数を作成します
         #region NETWORKED_VAR
         // Animationに流すスピード変数
-        private NetworkVariable<float> speed = new NetworkVariable<float>( 0.0f);
+        private NetworkVariable<float> speed = new NetworkVariable<float>( 0.0f,
+            NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         // プレイヤー名
-        private NetworkVariable<Unity.Collections.FixedString64Bytes> playerName = new NetworkVariable<Unity.Collections.FixedString64Bytes>();
+        private NetworkVariable<Unity.Collections.FixedString64Bytes> playerName = 
+            new NetworkVariable<Unity.Collections.FixedString64Bytes>("",NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
         #endregion NETWORKED_VAR
 
-
-        // NetworkVariableはサーバーでしか更新できないので更新を依頼します
-        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
-        private void SetSpeedServerRpc(float speed)
-        {
-            this.speed.Value = speed;
-        }
-        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
-        private void SetPlayerNameServerRpc(string name)
-        {
-            this.playerName.Value = name;
-        }
 
         private void Awake()
         {
@@ -69,8 +52,8 @@ namespace UTJ.NetcodeGameObjectSample
         {
             if (IsOwner)
             {
-                // プレイヤー名をセットします
-                SetPlayerNameServerRpc( ConfigureConnectionBehaviour.playerName);
+                // Set player name
+                this.playerName.Value = ConfigureConnectionBehaviour.playerName;
                 // コントローラーの有効化をします
                 ControllerBehaviour.Instance.Enable();
             }
@@ -123,7 +106,7 @@ namespace UTJ.NetcodeGameObjectSample
             // 移動処理
             Vector3 move = ControllerBehaviour.Instance.LPadVector;
             float speedValue = move.magnitude;
-            this.SetSpeedServerRpc(speedValue);
+            this.speed.Value = speedValue;
             move *= Time.deltaTime * 4.0f;
             rigidbodyComponent.position += move;
 
@@ -143,29 +126,16 @@ namespace UTJ.NetcodeGameObjectSample
             {
                 if (ControllerBehaviour.Instance.IsKeyDown(i))
                 {
-                    // 他の人に流してもらうために、サーバーにRPCします。
-                    PlayAudioRequestOnServerRpc(i);
+                    PlayAudioRpc(i);
                 }
             }
             // 入力の通知を通知します
             ControllerBehaviour.Instance.OnUpdateEnd();
         }
 
-        // Clientからサーバーに呼び出されるRPCです。
-        [Unity.Netcode.ServerRpc(RequireOwnership = true)]
-        private void PlayAudioRequestOnServerRpc(int idx,ServerRpcParams serverRpcParams = default)
-        {
-            // PlayAudioを呼び出します
-            PlayAudioClientRpc(idx);
-        }
 
-        // 音を再生します。付随してParticleをPlayします
-        [Unity.Netcode.ClientRpc]
-        private void PlayAudioClientRpc(int idx,ClientRpcParams clientRpcParams = default)
-        {
-            PlayAudio(idx);
-        }
-        private void PlayAudio(int idx) { 
+        [Rpc(SendTo.Everyone)]
+        private void PlayAudioRpc(int idx) { 
             this.audioSouceComponent.clip = audios[idx];
             this.audioSouceComponent.Play();
 
