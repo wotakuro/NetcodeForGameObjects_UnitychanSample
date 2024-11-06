@@ -1,51 +1,52 @@
 # NetcodeForGameObjects_UnitychanSample
-Netcode for GameObjectsのユニティちゃんサンプルです
+This is a Unity-Chan sample for Netcode for GameObjects.
+The compatible Unity version is Unity 6.
 [日本語はコチラ](README.ja.md)
 
 
-# 画面
+# ScreenShot
 ![Sample](docs/Sample.gif "Sample")
 
+# Flow to connect
+There are three main connection ways. <br />
+These are: connecting directly via a local network, connecting via a relay server, and connecting via a headless server. <br />
 
-# 大まかな流れ
-大きく3つの接続方法があります。<br />
-ローカルネットワークで直接つなぐパターン、Relayサーバー経由でつなぐパターン、ヘッドレスサーバーでつなぐパターン です。<br />
 
-
-## ローカルネットワークで繋ぐ場合
-1.誰かが「ホストとして起動」として起動します。 <br />
-2.ホストとして起動したら、右上画面に ホストのIPアドレス、Port番号が載ります。<br />
-3.クライアントとして繋ぎに行く人は、「接続先IPアドレス、Port番号」を入力して、「クライアントとして起動」を押します。<br />
+## When connecting via a local network
+1. Someone starts up the program as the host. <br />
+2. When you start up as the host, the host's IP address and port number will be displayed in the top right-hand corner of the screen. <br />
+3. The person who is going to connect as a client enters the ‘IP address and port number of the connection destination’ and presses ‘Start as a client’. <br />
 
 ![](docs/LANHost.png) <br />
-※「Relayサーバー使用」のチェックボックスは外してください
+(Please uncheck the ‘Use Relay Server’.)
 
-## Relayサーバーを経由して繋ぐ場合
+## Connecting via Relay server
 
-こちらのつなぎ方を行う場合は、UnityのRelayサービスを利用します。<br />
+If you want to connect in this way, you will need to use Unity's Relay service. <br />
 <br />
-Unityプロジェクトをクラウドサービスと紐付け、ダッシュボード上でRelayをOnにした状態でビルドする必要があります。
+You will need to link your Unity project to the cloud service and build it with Relay turned on in the dashboard.
 
-1.誰かが「Relayサーバー使用」をチェックした状態でホストとして起動します<br />
-2.ホストとして起動したら右上画面に、参加用のコードが表示されます。<br />
-3.クライアントとしてつなぎに行く人は、「Relayサーバー使用」をチェックした状態で、RelayCodeにホスト側のコードを入力します。<br />
+1. Start as a host with the ‘Use Relay Server’ box checked<br />
+2. Once you have started as a host, the code for joining will be displayed in the top right-hand corner of the screen.<br />
+3. If you are connecting as a client, enter the host's code into the RelayCode box with the ‘Use Relay Server’checkedd.
+
+
 ![](docs/RelayCode.png) <br />
 
-## ヘッドレスサーバーを利用して繋ぐ場合
+## Connecting using a headless server
 
-こちらのつなぎ方を行う場合は、Server Buildをしたファイルが必要です。<br />
+To connect using this method, you will need the Server Build file. <br />
 ![](docs/ServerBuild.png) <br />
-上記のサーバービルドを行ったファイルをサーバーに置き、実行することで動作出来ます。
+Please build using ‘Windows Server’, ‘Linux Server’ or ‘MacOS Server’ in the Build Profile.
 
+1. Enter the server's IP address and port number, and press ‘Start as Client’ to run.
 
-1.サーバーのIPアドレス、及びポート番号を入力して、「クライアントとして起動」を押すことで実行可能です。
+# How to use
+Move with the cursor keys and press 1-5 on the keyboard to play the voice. <br />
+A virtual pad is implemented for smartphones, so you can use it with the build for smartphones. <br />
 
-# 操作方法について
-カーソルキーで移動し、キーボードの1～5を押す事でボイス再生が出来ます。<br />
-スマートフォンではバーチャルパッドを実装していますので、スマートフォン向けビルドで操作できます。<br />
+# About the dummy client mode
+Define ‘ENABLE_AUTO_CLIENT’should be enabled from ProjectSettings. <br />
 
-# ダミークライアントモードについて
-
-「Sample.exe -batchmode」というようにバッチモードで起動した際にはダミークライアントとして動作します。<br />
-実行ファイルと同じディレクトリにあるconnectInfo.json を読みこんで、その設定で接続します。接続先等を弄りたい場合はコチラを直接編集して起動してください。<br />
-
+When it is started in batch mode, such as ‘Sample.exe -batchmode’, it will operate as a dummy client. <br />
+It will read the connectInfo.json file in the same directory as the executable file and connect using the settings in that file. If you want to change the connection destination, etc., please edit this file directly and start it. <br />
