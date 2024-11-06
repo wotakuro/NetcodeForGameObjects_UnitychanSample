@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StringTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 609121b839712a245893b3a922a5cd2d, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 9176998507766349895
+  m_TableData:
+  - m_Id: 756176433152
+    m_Localized: Audio Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 230341795164160
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231400466853888
+    m_Localized: Start as Host
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231452434280448
+    m_Localized: Start as Client
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231964508467200
+    m_Localized: Use Relay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232151717031936
+    m_Localized: Port Number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232245560389632
+    m_Localized: Connect IP Addr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 232604450205696
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281108082110464
+    m_Localized: UnityChan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281201904496640
+    m_Localized: RelayCode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281283865391104
+    m_Localized: RelayCode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281344489861120
+    m_Localized: Input Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 281516716371968
+    m_Localized: Disconnect
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
+  - m_Id: 296359255126016
+    m_Localized: "ServerInfo\nIPAddress\uFF1A{ConnectIp}\nPort\uFF1A{Port}"
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
+  - m_Id: 296439508938752
+    m_Localized: 'Relay Information
+
+      RelayCode:{RelayCode}'
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
+  - m_Id: 296463580049408
+    m_Localized: Your IP Address is {ipaddr}.
+    m_Metadata:
+      m_Items:
+      - rid: 9176998507766349895
+  references:
+    version: 2
+    RefIds:
+    - rid: 9176998507766349895
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 296439508938752
+        - id: 296463580049408
+        - id: 281516716371968
+        - id: 296359255126016

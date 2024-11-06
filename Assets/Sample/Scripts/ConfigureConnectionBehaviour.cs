@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace UTJ.NetcodeGameObjectSample
@@ -9,8 +11,6 @@ namespace UTJ.NetcodeGameObjectSample
     // 接続設定や接続をするUIのコンポーネント
     public class ConfigureConnectionBehaviour : MonoBehaviour
     {
-        // IPアドレス表示用
-        public Text localIpInfoText;
         // Relayサーバー使用するかチェックボックス
         public Toggle useRelayToggle;
         // 接続先IP入力ボックス
@@ -40,8 +40,6 @@ namespace UTJ.NetcodeGameObjectSample
         // 一旦Player名の保存箇所です
         public static string playerName;
 
-        // ローカルのIPアドレス
-        private string localIPAddr;
 
         // 接続時
         void Awake()
@@ -51,8 +49,6 @@ namespace UTJ.NetcodeGameObjectSample
             Application.targetFrameRate = 60;
 
 
-            localIPAddr = NetworkUtility.GetLocalIP();
-            this.localIpInfoText.text = "あなたのIPアドレスは、" + localIPAddr;
 
             this.connectInfo = ConnectInfo.LoadFromFile();
             ApplyConnectInfoToUI();
@@ -111,7 +107,7 @@ namespace UTJ.NetcodeGameObjectSample
             // Relayを利用しないなら即ホストとして起動
             else
             {
-                this.serverManager.SetInformationText(connectInfo, localIPAddr);
+                this.serverManager.SetHostNetworkInformation();
                 var result = Unity.Netcode.NetworkManager.Singleton.StartHost();
             }
         }
@@ -141,6 +137,7 @@ namespace UTJ.NetcodeGameObjectSample
         public void OnClickReset()
         {
             this.connectInfo = ConnectInfo.GetDefault();
+
             ApplyConnectInfoToUI();
         }
 
@@ -173,7 +170,7 @@ namespace UTJ.NetcodeGameObjectSample
             var transport = Unity.Netcode.NetworkManager.Singleton.NetworkConfig.NetworkTransport;
 
             // ※UnityTransportとして扱います
-            var unityTransport = transport as Unity.Netcode.UnityTransport;
+            var unityTransport = transport as UnityTransport;
             if (unityTransport != null)
             {
                 // サーバーはAnyから受け付けます

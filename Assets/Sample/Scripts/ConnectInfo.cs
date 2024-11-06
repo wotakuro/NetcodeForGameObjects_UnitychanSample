@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using JetBrains.Annotations;
+using UnityEngine.Localization;
 
 namespace UTJ.NetcodeGameObjectSample
 {
@@ -27,6 +28,17 @@ namespace UTJ.NetcodeGameObjectSample
         [SerializeField]
         public string playerName;
 
+        public ConnectInfo()
+        {
+        }
+        public ConnectInfo(ConnectInfo src)
+        {
+            this.ipAddr = src.ipAddr;
+            this.port = src.port;
+            this.useRelay = src.useRelay;
+            this.relayCode = src.relayCode;
+            this.playerName = src.playerName;
+        }
 
 
         public static ConnectInfo GetDefault()
@@ -35,9 +47,16 @@ namespace UTJ.NetcodeGameObjectSample
             info.useRelay = false;
             info.ipAddr = "127.0.0.1";
             info.port = 7777;
-            info.playerName = "大鳥こはく";
+            info.playerName = GetPlayerDefaultName();
 
             return info;
+        }
+
+        private static string GetPlayerDefaultName()
+        {
+
+            var localizedString = new LocalizedString("StringTable", "DefaultName");
+            return localizedString.GetLocalizedString();
         }
 
         private static string ConfigFile

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -8,41 +8,41 @@ using System.Threading.Tasks;
 using Unity.Services.Relay.Models;
 using System;
 using Unity.Services.Relay;
-
+using Unity.Netcode.Transports.UTP;
 
 namespace UTJ.NetcodeGameObjectSample
 {
-    // RelayŠÖ˜A‚ÌƒR[ƒh
-    // ‰º‹L‚ÌRelay‚ÌƒR[ƒh‚ğQl‚É‚µ‚Ä‚¢‚Ü‚·
+    // Relayé–¢é€£ã®ã‚³ãƒ¼ãƒ‰
+    // ä¸‹è¨˜ã®Relayã®ã‚³ãƒ¼ãƒ‰ã‚’å‚è€ƒã«ã—ã¦ã„ã¾ã™
     // https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop
     public class RelayServiceUtility
     {
-        // Host‘¤‚ÌƒR[ƒh
+        // Hostå´ã®ã‚³ãƒ¼ãƒ‰
         #region HOST_CODE
-        // Relay‚ÅJoin‚·‚é‚½‚ß‚ÌƒR[ƒh
+        // Relayã§Joinã™ã‚‹ãŸã‚ã®ã‚³ãƒ¼ãƒ‰
         public static string HostJoinCode { get; private set; }
-        // RelayƒT[ƒo[‚Å‚ÌÅ‘åÚ‘±”
+        // Relayã‚µãƒ¼ãƒãƒ¼ã§ã®æœ€å¤§æ¥ç¶šæ•°
         private static readonly int k_MaxUnityRelayConnections = 10;
 
-        // Unity‚ÌRelay‚ÉQ‰Á‚µ‚Ü‚·
+        // Unityã®Relayã«å‚åŠ ã—ã¾ã™
         public static async void StartUnityRelayHost(Action onSuccess,Action onFailed)
         {
             try
             {
-                // UnityƒT[ƒrƒX‚Ì‰Šú‰»‹y‚ÑSignIn‚ğs‚¢‚Ü‚·
+                // Unityã‚µãƒ¼ãƒ“ã‚¹ã®åˆæœŸåŒ–åŠã³SignInã‚’è¡Œã„ã¾ã™
                 await UnityServices.InitializeAsync();
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     var playerId = AuthenticationService.Instance.PlayerId;
-                    Debug.Log("”FØŒã‚ÌPlayerIDF"+playerId);
+                    Debug.Log("èªè¨¼å¾Œã®PlayerIDï¼š"+playerId);
                 }
 
                 var utp = NetworkManager.Singleton.GetComponent<UnityTransport>();
-                // RelayƒT[ƒo[‚ÌŠm•Û‚ğ‚µ‚ÄJoinƒR[ƒh‚ğæ“¾‚µ‚Ü‚·
+                // Relayã‚µãƒ¼ãƒãƒ¼ã®ç¢ºä¿ã‚’ã—ã¦Joinã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã—ã¾ã™
                 var serverRelayUtilityTask = AllocateRelayServerAndGetJoinCode(k_MaxUnityRelayConnections);
                 await serverRelayUtilityTask;
-                // RelayƒT[ƒo[‚Ì”X‚ğæ“¾‚µ‚Ä‚«‚ÄATransport‚Éİ’è‚ğ‚µ‚Ü‚·
+                // Relayã‚µãƒ¼ãƒãƒ¼ã®è«¸ã€…ã‚’å–å¾—ã—ã¦ãã¦ã€Transportã«è¨­å®šã‚’ã—ã¾ã™
                 var (ipv4Address, port, allocationIdBytes, connectionData, key, joinCode) = serverRelayUtilityTask.Result;
                 utp.SetRelayServerData(ipv4Address, port, allocationIdBytes, key, connectionData);
                 HostJoinCode = joinCode;
@@ -64,7 +64,7 @@ namespace UTJ.NetcodeGameObjectSample
 
         }
 
-        // RelayServer‚ÌŠm•Û‚ğs‚¢‚Ü‚·
+        // RelayServerã®ç¢ºä¿ã‚’è¡Œã„ã¾ã™
         private static async Task<(string ipv4address, ushort port,
             byte[] allocationIdBytes, byte[] connectionData, byte[] key, string joinCode)> AllocateRelayServerAndGetJoinCode(int maxConnections, string region = null)
         {
@@ -104,7 +104,7 @@ namespace UTJ.NetcodeGameObjectSample
         {
             try
             {
-                // UnityService‚ğ‰Šú‰»‚µ‚ÄSignIn‚µ‚Ü‚·
+                // UnityServiceã‚’åˆæœŸåŒ–ã—ã¦SignInã—ã¾ã™
                 await UnityServices.InitializeAsync();
                 //Debug.Log(AuthenticationService.Instance);
                 if (!AuthenticationService.Instance.IsSignedIn)
@@ -113,7 +113,7 @@ namespace UTJ.NetcodeGameObjectSample
                     var playerId = AuthenticationService.Instance.PlayerId;
                     //Debug.Log(playerId);
                 }
-                // JoinƒR[ƒh‚©‚çÚ‘±‚ÉŠÖ‚·‚éî•ñ‚ğæ“¾‚µ‚ÄƒZƒbƒg‚µ‚Ü‚·
+                // Joinã‚³ãƒ¼ãƒ‰ã‹ã‚‰æ¥ç¶šã«é–¢ã™ã‚‹æƒ…å ±ã‚’å–å¾—ã—ã¦ã‚»ãƒƒãƒˆã—ã¾ã™
                 var utp = NetworkManager.Singleton.GetComponent<UnityTransport>();
                 var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinCode);
                 await clientRelayUtilityTask;
@@ -128,7 +128,7 @@ namespace UTJ.NetcodeGameObjectSample
 
         }
 
-        // JoinCode‚©‚çÚ‘±î•ñ”X‚ğæ“¾‚È‚Ç‚µ‚Ü‚·
+        // JoinCodeã‹ã‚‰æ¥ç¶šæƒ…å ±è«¸ã€…ã‚’å–å¾—ãªã©ã—ã¾ã™
         private static async
             Task<(string ipv4address, ushort port, byte[] allocationIdBytes, byte[] connectionData, byte[]
                 hostConnectionData, byte[] key)> JoinRelayServerFromJoinCode(string joinCode)

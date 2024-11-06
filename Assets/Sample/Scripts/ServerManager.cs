@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking.Match;
+//using UnityEngine.Networking.Match;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using Unity.Netcode;
+using UnityEngine.Localization;
 
 namespace UTJ.NetcodeGameObjectSample
 {
@@ -15,10 +16,11 @@ namespace UTJ.NetcodeGameObjectSample
         public Button stopButton;
         public GameObject configureObject;
 
-        public GameObject serverInfoRoot;
-        public Text serverInfoText;
+        [SerializeField]
+        public ServerConnectInfo serverConnectInfoUI;
 
         private ConnectInfo cachedConnectInfo;
+
 
 
 
@@ -36,25 +38,16 @@ namespace UTJ.NetcodeGameObjectSample
         }
 
         // Information用のテキストをセットします
-        public void SetInformationText(ConnectInfo connectInfo, string localIp) {
-            if (!connectInfo.useRelay)
-            {
-                var stringBuilder = new System.Text.StringBuilder(256);
-                this.serverInfoRoot.SetActive(true);
-                stringBuilder.Append("サーバー接続情報\n").
-                    Append("接続先IP:").Append(localIp).Append("\n").
-                    Append("Port番号:").Append(connectInfo.port);
-                this.serverInfoText.text = stringBuilder.ToString();
-            }
+        public void SetHostNetworkInformation()
+        {
+            serverConnectInfoUI.EnableInfoUI(this.cachedConnectInfo, null);
         }
+
+
         // Information用のテキストをセットします
         public void SetInformationTextWithRelay(string joinCode)
         {
-            var stringBuilder = new System.Text.StringBuilder(256);
-            this.serverInfoRoot.SetActive(true);
-            stringBuilder.Append("Relay接続情報\n").
-                    Append("コード:").Append(joinCode);
-            this.serverInfoText.text = stringBuilder.ToString();
+            this.serverConnectInfoUI.EnableInfoUI(this.cachedConnectInfo, joinCode);
         }
 
 
@@ -90,7 +83,6 @@ namespace UTJ.NetcodeGameObjectSample
         private void OnStartServer()
         {
             Debug.Log("Start Server");
-            var clientId = Unity.Netcode.NetworkManager.Singleton.ServerClientId;
             // hostならば生成します
 
             configureObject.SetActive(false);
@@ -107,7 +99,7 @@ namespace UTJ.NetcodeGameObjectSample
 
             this.configureObject.SetActive(true);
             this.stopButton.gameObject.SetActive(false);
-            this.serverInfoRoot.SetActive(false);
+            this.serverConnectInfoUI.DisableInfoUI();
         }
         [SerializeField]
         private GameObject networkedPrefab;
