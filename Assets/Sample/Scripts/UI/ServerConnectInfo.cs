@@ -74,6 +74,7 @@ namespace UTJ.NetcodeGameObjectSample
                         ["RelayCode"] = cachedJoinCode
                     }
                 };
+                this.serverInfoText.text = localizedString.GetLocalizedString();
             }
         }
 
