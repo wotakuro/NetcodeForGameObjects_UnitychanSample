@@ -1,5 +1,7 @@
 # NetcodeForGameObjects_UnitychanSample
 Netcode for GameObjectsのユニティちゃんサンプルです
+[日本語はコチラ](README.ja.md)
+
 
 # 画面
 ![Sample](docs/Sample.gif "Sample")
