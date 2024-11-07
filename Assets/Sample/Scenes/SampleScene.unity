@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -2487,7 +2488,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 1142964507}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 6b8ef1beb124090458e41fc0cac0c9ef, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -2508,13 +2510,7 @@ MonoBehaviour:
     AutoSpawnPlayerPrefabClientSide: 1
     NetworkMessageMetrics: 1
     NetworkProfilingMetrics: 1
-    OldPrefabList:
-    - Override: 0
-      Prefab: {fileID: 4555631235796503826, guid: 10cad2b85ff2c724d8c50f8de9e53685,
-        type: 3}
-      SourcePrefabToOverride: {fileID: 0}
-      SourceHashToOverride: 0
-      OverridingTargetPrefab: {fileID: 0}
+    OldPrefabList: []
   RunInBackground: 1
   LogLevel: 1
 --- !u!4 &1142964509
@@ -2618,7 +2614,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 8
+  serializedVersion: 9
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -3370,7 +3366,7 @@ GameObject:
   - component: {fileID: 1546070590}
   - component: {fileID: 1546070593}
   m_Layer: 5
-  m_Name: Dropdown (Legacy)
+  m_Name: LanguageDropDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
