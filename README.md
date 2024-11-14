@@ -17,7 +17,7 @@ These are: connecting directly via a local network, connecting via a relay serve
 2. When you start up as the host, the host's IP address and port number will be displayed in the top right-hand corner of the screen. <br />
 3. The person who is going to connect as a client enters the ‘IP address and port number of the connection destination’ and presses ‘Start as a client’. <br />
 
-![](docs/LANHost.png) <br />
+![](docs/LANHost_EN.png) <br />
 (Please uncheck the ‘Use Relay Server’.)
 
 ## Connecting via Relay server
@@ -31,7 +31,7 @@ You will need to link your Unity project to the cloud service and build it with 
 3. If you are connecting as a client, enter the host's code into the RelayCode box with the ‘Use Relay Server’checkedd.
 
 
-![](docs/RelayCode.png) <br />
+![](docs/RelayCode_EN.png) <br />
 
 ## Connecting using a headless server
 
