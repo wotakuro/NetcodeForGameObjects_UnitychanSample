@@ -52,8 +52,8 @@ Define「ENABLE_AUTO_CLIENT」をProjectSettingsより有効にする必要が�
 
 
 
-# キーポイント
-Netcode for
+# クイックスタート
+ネットコードの基礎や、このサンプルプロジェクトでの利用方法を簡単に説明します。
 
 ## Relayではなく、直接ネットワークを繋ぐ方法
 以下のようにNetworkManagerクラスを設置します。<br />
