@@ -142,9 +142,9 @@ For this reason, we use a ClientNetworkTransform with the following processing i
 
 ```
 public class ClientNetworkTransform : NetworkTransform{
-protected override bool OnIsServerAuthoritative(){
-return false;
-}
+    protected override bool OnIsServerAuthoritative(){
+        return false;
+    }
 }
 ```
 
@@ -161,9 +161,9 @@ new NetworkVariable<Unity.Collections.FixedString64Bytes>(‘’,NetworkVariable
 And, by doing the following, it is set up so that only the owner can update it. (IsOwner is a property on the NetworkBehaviour side.)
 ```
 private void Start(){
-if (IsOwner){
-this.playerName.Value = ConfigureConnectionBehaviour.playerName;
-}
+    if (IsOwner){
+        this.playerName.Value = ConfigureConnectionBehaviour.playerName;
+    }
 }
 ```
 
@@ -176,13 +176,13 @@ Then, when you call it, you pass who you want to execute it as an argument. Here
 ```
 [Rpc(SendTo.Everyone)]
 private void PlayAudioRpc(int idx) { 
-this.audioSouceComponent.Play();
+    this.audioSouceComponent.Play();
 }
 ```
 
 And by doing the following, PlayAudioRpc is executed on all clients.
 ```
 if(IsOwner){
-PlayAudioRpc(0);
+    PlayAudioRpc(0);
 }
 ```
